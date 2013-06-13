@@ -3,6 +3,7 @@ games_info = {}
 CSV.foreach('games_data.csv') do |game_info|
 	games_info[game_info[1]] = {
 		score: game_info[0].to_i,
+		name: game_info[1].force_encoding("UTF-8"),
 		system: game_info[2],
 		year: game_info[3],
 		genre: game_info[4],
@@ -15,7 +16,18 @@ CSV.foreach('games_data.csv') do |game_info|
 	}
 end
 games_info = games_info.sort_by {|title,game_info| game_info[:score] }
-puts games_info.reverse!
-File.open('divs_for_game.html', 'w') do |html|
-
+games_info.reverse!
+File.open('table_rows.html', 'w') do |html|
+	puts "Creating table head..."
+	html.write("\t<table>\n\t<caption>Do scores really impact on sales?</caption>\n")
+	html.write("\t\t<thead>\n" + "<th>Reviews in %</th>\n" + "\t\t\t<th>Game Title</th>\n" + "\t\t\t<th>Info</th>\n" + "\t\t</thead>")
+ 	html.write("\t\t<tbody>\n")
+ 	games_info.each do |x,g|
+	 	puts "Creating new row for #{g[:name]}"
+ 		html.write("\t\t<tr>\n\t\t\t<td>#{g[:score]}%</td>\n\t\t\t<td>#{g[:name]}</td>\n\t\t\t<td>#{g[:global]}</td><tr>\n")
+ 	end
+ 	puts "DONE!"
+ 	html.write("\t\t</tbody\n")
+ 	html.write("\t</table>")
+ 	puts "Leaving..."
  end
