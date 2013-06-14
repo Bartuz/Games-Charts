@@ -19,15 +19,15 @@ games_info = games_info.sort_by {|title,game_info| game_info[:score] }
 games_info.reverse!
 File.open('WebPage/tables.html', 'w') do |html|
 	puts "Creating table ..."
-	html.write("\t<table>\n\t\t<caption>Do scores really impact on sales?</caption>\n")
-	html.write("\t\t<thead>\n" + "\t\t\t<th>Reviews in %</th>\n" + "\t\t\t<th>Game Title</th>\n" + "\n" + "\t\t</thead>")
- 	html.write("\t\t<tbody>\n")
+	html.write("\t<table>\n\t\t\t<caption>Do scores really impact on sales?</caption>\n")
+	html.write("\t\t\t<thead>\n" + "\t\t\t\t<th>Reviews in %</th>\n" + "\t\t\t\t<th>Game Title</th>\n" + "\t\t\t</thead>")
+ 	html.write("\t\t\t<tbody>\n")
  	games_info.each do |x,g|
 	 	puts "Creating new row for #{g[:name]}"
- 		html.write("\t\t<tr>\n\t\t\t<td>#{g[:score]}%</td>\n\t\t\t<td>#{g[:name]}</td>\n\t\t<tr>\n")
+ 		html.write("\t\t\t<tr>\n\t\t\t\t<td>#{g[:score]}%</td>\n\t\t\t\t<td>#{g[:name]}</td>\n\t\t\t<tr>\n")
  	end
  	puts "DONE!"
- 	html.write("\t\t</tbody>\n")
- 	html.write("\t</table>")
+ 	html.write("\t\t\t</tbody>\n")
+ 	html.write("\t\t</table>")
  	puts "Leaving..."
  end
